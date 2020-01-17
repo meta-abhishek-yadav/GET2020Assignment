@@ -137,7 +137,7 @@ public class ArrOperation
 		length=list.size();
 		if(length==0)
 		{
-			//throw new AssertionError("Empty List");
+			throw new AssertionError("Empty List");
 		}
 		else
 		{
