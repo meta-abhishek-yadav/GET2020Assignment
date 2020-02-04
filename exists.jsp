@@ -9,6 +9,6 @@
 <body>
 <script>
 alert('User Already Exists');
-window.location.href="signup.jsp";</script>
+window.location.href="addStudent.jsp";</script>
 </body>
 </html>

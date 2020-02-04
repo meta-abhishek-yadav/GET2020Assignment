@@ -8,8 +8,7 @@
 </head>
 <body>
 <script>
-alert('Registered successfully');
-window.location.href="index.jsp";
-</script>
+alert('Updation failed please enter correct previous email');
+window.location.href="showStudents.jsp";</script>
 </body>
 </html>
