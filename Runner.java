@@ -1,60 +1,50 @@
 package com.abhi;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import com.abhi.Inventory;
-
 import java.io.*;
 import java.util.ArrayList;
-
 import org.json.*;
- 
-@Path("/inventory")
+import com.abhi.Book;
+
+@Path("/book")
 public class Runner {
 	Database database=new Database();
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Inventory> showAll()
+	public ArrayList<Book> showAll()
 	{
 	
 		 return database.showAll();
 	}
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{name}")
-	public int show(@PathParam("name") String name)
+	@Path("/{title}")
+	public Book show(@PathParam("title") String title)
 	{
-		return database.show(name);
+		return database.show(title);
 	}
 
 	@POST
+	@Path("/{title}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String addAll(ArrayList<Inventory> fruits)
+	public String add(@PathParam("title") String title,Book book)
 	{
-		
-		return database.addAll(fruits);
-		
-	}
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{name}")
-	public String add(@PathParam("name") String name,Inventory inven)
-	{
-		return database.add(name,inven);
+		return database.add(title,book);	
 	}
 	
+	/*@PUT
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/{title}")
+	public String update(@PathParam("title") String title,Book book)
+	{
+		return database.update(title,book);
+	}*/
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
-	public String updateAll(ArrayList<Inventory> fruits)
+	@Path("/{id}")
+	public String update(@PathParam("id") int id,Book books)
 	{
-		return database.updateAll(fruits);
-	}
-	@PUT
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{name}")
-	public String update(@PathParam("name") String name,Inventory fruit)
-	{
-		return database.update(name,fruit);
+		return database.update(id,books);
 	}
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
@@ -64,10 +54,10 @@ public class Runner {
 	}
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{name}")
-	public String delete(@PathParam("name") String name)
+	@Path("/{id}")
+	public String delete(@PathParam("id") int id)
 	{
-		return database.delete(name);
+		return database.delete(id);
 	}
 
 }

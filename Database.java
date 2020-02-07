@@ -1,35 +1,35 @@
 package com.abhi;
-import org.json.*;
 
+import org.json.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.*;
 import java.sql.*;
-
 import javax.xml.bind.annotation.XmlRootElement;
-
-import com.abhi.Inventory;
 
 public class Database {
 	
-	ArrayList<Inventory> list=new ArrayList<Inventory>();
+	ArrayList<Book> list=new ArrayList<Book>();
 	public Database()
 	{
 		try
 		{
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection con = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/fruittable", "root", "abhishek");
+				"jdbc:mysql://localhost:3306/bookstore", "root", "abhishek");
 		Statement statement = con.createStatement();
-		ResultSet rs=statement.executeQuery("select * from fruits");
+		ResultSet rs=statement.executeQuery("select * from book");
 		while(rs.next())
 		{
-		Inventory inven=new Inventory();
-		inven.setName(rs.getString(1));
-		inven.setQuantity(rs.getInt(2));
-		list.add(inven);
+		Book book=new Book();
+		book.setId(rs.getInt(1));
+		book.setTitle(rs.getString(2));
+		book.setWriter(rs.getString(3));
+		book.setPublisher(rs.getString(4));
+		book.setPublishedYear(rs.getInt(5));
+		list.add(book);
 		}
 		con.close();
 
@@ -39,29 +39,33 @@ public class Database {
 	/**
 	 * @return list of inventory contains details of fruits and their quantity
 	 */
-	public ArrayList<Inventory>  showAll()
+	public ArrayList<Book>  showAll()
 	{
 		return list;
 	}
 	/**
-	 * @return message after addition the fruits to Database
+	 * @return message after addition the book to Database according to book title
 	 */
-	public String add(String name,Inventory fruit)
+	public String add(String title,Book book)
 	{
 		int i=0,length=list.size(),find=0;
-		System.out.println(length+" "+name+" "+fruit.getName()+length);
 		for(i=0;i<length;i++)
 		{
-			if(list.get(i).getName().equalsIgnoreCase(name))
+			if(list.get(i).getTitle().equalsIgnoreCase(title))
 			{
 				try
 				{
 				Class.forName("com.mysql.jdbc.Driver");
 				Connection con = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/fruittable", "root", "abhishek");
-				PreparedStatement pstmt=con.prepareStatement("update fruits set quantity=? where name=?");
-				pstmt.setInt(1, list.get(i).getQuantity()+fruit.getQuantity());
-				pstmt.setString(2, list.get(i).getName());
+						"jdbc:mysql://localhost:3306/bookstore", "root", "abhishek");
+				PreparedStatement pstmt=con.prepareStatement("update book set id=? ,title=?,writer=?,publisher=?,publishedyear=?  where title=?");
+				pstmt.setInt(1,book.getId());
+				pstmt.setString(2, book.getTitle());
+				pstmt.setString(3, book.getWriter());
+				pstmt.setString(4, book.getPublisher());
+				pstmt.setInt(5,book.getPublishedYear());
+				pstmt.setString(6, book.getTitle());
+
 				pstmt.executeUpdate();
 				con.close();
 				find=1;
@@ -72,15 +76,18 @@ public class Database {
 		}
 		if(find==0)
 		{
-			System.out.println("come till here2 "+name+" "+fruit.getQuantity()+"  "+fruit.getName());
 			try
 			{
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con1 = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/fruittable", "root", "abhishek");
-			PreparedStatement pstmt1=con1.prepareStatement("insert into fruits values(?,?)");
-			pstmt1.setString(1,fruit.getName());
-			pstmt1.setInt(2,fruit.getQuantity());
+					"jdbc:mysql://localhost:3306/bookstore", "root", "abhishek");
+			PreparedStatement pstmt1=con1.prepareStatement("insert into book values(?,?,?,?,?)");
+			
+			pstmt1.setInt(1,book.getId());
+			pstmt1.setString(2, book.getTitle());
+			pstmt1.setString(3, book.getWriter());
+			pstmt1.setString(4, book.getPublisher());
+			pstmt1.setInt(5,book.getPublishedYear());
 			pstmt1.executeUpdate();
 			con1.close();
 
@@ -90,57 +97,34 @@ public class Database {
 		return "Added Successfully";
 		
 	}
-	/**
-	 * this method update the database with list of fruits
-	 * @return message after update the fruits to Database
-	 */
-	public String updateAll(ArrayList<Inventory> fruits)
-	{
-		try
-		{
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection con1 = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/fruittable", "root", "abhishek");
-		PreparedStatement pstmt1=con1.prepareStatement("DELETE FROM fruits");
-		pstmt1.execute();
-		for(int i=0;i<fruits.size();i++)
-		{
-			PreparedStatement pstmt2=con1.prepareStatement("insert into fruits values(?,?)");
-			pstmt2.setString(1, fruits.get(i).getName());
-			pstmt2.setInt(2, fruits.get(i).getQuantity());
-			pstmt2.executeUpdate();
-		}
-		con1.close();
 
-		}
-		catch(Exception e){}
-
-		return "updated Successfully";
-	}
 	/**
-	 * this method update data as name of fruits
-	 * @param name of fruit to update
-	 * @param fruit the details of fruits in object form
-	 * @return
+	 * this method update data as id of book
+	 * @param id of book to update
+	 * @param book the details of book in object form
+	 * @return message of update
 	 */
-	public String update(String name,Inventory fruit)
+	public String update(int id,Book book)
 	{
 		int i=0,length=list.size(),find=0;
 		for(i=0;i<length;i++)
 		{
-			if(list.get(i).getName().equalsIgnoreCase(name))
+			if(list.get(i).getId()==(id))
 			{
 				try
 				{
-				Class.forName("com.mysql.jdbc.Driver");
-				Connection con = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/fruitTable", "root", "abhishek");
-				PreparedStatement pstmt=con.prepareStatement("update fruits set quantity=? where name=?");
-				pstmt.setInt(1, list.get(i).getQuantity()+fruit.getQuantity());
-				pstmt.setString(2, list.get(i).getName());
-				pstmt.executeUpdate();
-				find=1;
-				con.close();
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection con = DriverManager.getConnection(
+							"jdbc:mysql://localhost:3306/bookstore", "root", "abhishek");
+					PreparedStatement pstmt=con.prepareStatement("update book set id=? ,title=?,writer=?,publisher=?,publishedyear=?  where id=?");
+					pstmt.setInt(1,book.getId());
+					pstmt.setString(2, book.getTitle());
+					pstmt.setString(3, book.getWriter());
+					pstmt.setString(4, book.getPublisher());
+					pstmt.setInt(5,book.getPublishedYear());
+					pstmt.setInt(6, book.getId());
+					pstmt.executeUpdate();
+					con.close();
 
 				break;
 				}
@@ -153,79 +137,30 @@ public class Database {
 		}
 		else
 		{
-		return "updated Successfully";
+		return "updated Successfully by id";
 		}
 	}
 	/**
 	 * 
-	 * @param name of the fruit to show 
-	 * @return the quantity of fruits
+	 * @param title of the book to show 
+	 * @return the details of book
 	 */
-	public int show(String name)
+	public Book show(String title)
 	{
+		Book book=null;
 		int i=0,length=list.size(),quantity=-1;
 		for(i=0;i<length;i++)
 		{
-			if(list.get(i).getName().equalsIgnoreCase(name))
+			if(list.get(i).getTitle().equalsIgnoreCase(title))
 			{
-				quantity=list.get(i).getQuantity();
+				book=list.get(i);
 				break;
 			}
 		}
-		return quantity;
+		return book;
 	}
 	/**
-	 * @param fruits the list of fruits
-	 * @return message after adding fruits to database
-	 */
-	public String addAll(ArrayList<Inventory> fruits)
-	{
-
-		int i=0,length=list.size(),find=0,j=0;
-		System.out.println("it "+length+" "+fruits.size());
-
-		try
-		{
-		Class.forName("com.mysql.jdbc.Driver");
-		Connection con = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/fruittable", "root", "abhishek");
-		for(j=0;j<fruits.size();j++)
-		{
-			find=0;
-		for(i=0;i<length;i++)
-		{
-			System.out.println("it comes");
-
-			if(list.get(i).getName().equalsIgnoreCase(fruits.get(j).getName()))
-			{
-				System.out.println("it not comes");
-
-				PreparedStatement pstmt=con.prepareStatement("update fruits set quantity=? where name=?");
-				pstmt.setInt(1, list.get(i).getQuantity()+fruits.get(j).getQuantity());
-				pstmt.setString(2, list.get(i).getName());
-				pstmt.executeUpdate();
-				find=1;
-				break;
-			}
-		}
-		if(find==0)
-		{
-			System.out.println("it comes here");
-			PreparedStatement pstmt1=con.prepareStatement("insert into fruits values(?,?)");
-			pstmt1.setInt(2,fruits.get(j).getQuantity());
-			pstmt1.setString(1, fruits.get(j).getName());
-			pstmt1.executeUpdate();		
-			System.out.println("it comes here also");
-	
-		}
-		}
-		con.close();
-		}
-		catch(Exception e){}
-		return "Added Successfully";
-	}
-	/**
-	 * @return message after deletion of fruits from database
+	 * @return message after adding books to database
 	 */
 	public String deleteAll()
 	{
@@ -233,44 +168,35 @@ public class Database {
 		{
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection con1 = DriverManager.getConnection(
-				"jdbc:mysql://localhost:3306/fruittable", "root", "abhishek");
-		PreparedStatement pstmt1=con1.prepareStatement("DELETE FROM fruits");
-		pstmt1.executeUpdate();
+				"jdbc:mysql://localhost:3306/bookstore", "root", "abhishek");
+		PreparedStatement pstmt1=con1.prepareStatement("DELETE FROM book");
+		pstmt1.execute();
 		con1.close();
 
 		}
 		catch(Exception e){}
-		return "Deleted Successfully";
+		return "Deleted table Successfully";
 	}
 	/**
-	 * @param name of fruit to delete from database
-	 * @return the message after deletion
+	 * @return message after deletion of books from database according to book id
 	 */
-	public String delete(String name)
+	public String delete(int id)
 	{
 		int i=0,length=list.size(),find=0;
 		for(i=0;i<length;i++)
 		{
-			System.out.println(list.get(i).getName()+"  "+name);
-
-			if(list.get(i).getName().equalsIgnoreCase(name))
+			if(list.get(i).getId()==(id))
 			{
-				System.out.println(list.get(i).getName()+"  "+name);
-
 				try
 				{
-					find=1;
-
 				Class.forName("com.mysql.jdbc.Driver");
 				Connection con1 = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/fruittable", "root", "abhishek");
-				PreparedStatement pstmt1=con1.prepareStatement("DELETE FROM fruits where name= ?");
-				pstmt1.setString(1,name);
+						"jdbc:mysql://localhost:3306/bookstore", "root", "abhishek");
+				PreparedStatement pstmt1=con1.prepareStatement("DELETE FROM book where id=?");
+				pstmt1.setInt(1,id);
 				pstmt1.executeUpdate();
 				con1.close();
-
-				System.out.println(list.get(i).getName()+"  "+name);
-
+				find=1;
 				break;
 				}
 				catch(Exception e){}
@@ -279,7 +205,7 @@ public class Database {
 		}
 		if(find==1)
 		{
-			return "Deleted Successfully";
+			return "Deleted Successfully by id";
 		}
 		else
 		{
