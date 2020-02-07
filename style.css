@@ -1,0 +1,55 @@
+a
+{
+	text-decoration:none;
+}
+#body
+{
+	font-size:40px;
+}
+body
+{
+	background-color:lavender;
+}
+form input
+         {
+            text-align: center;
+            margin: 10px;
+            padding: 15px;
+             border-width: 3px;
+            border-color: black;
+            width: 500px;
+            border-radius: 30px;
+            outline: 10px;
+            transition: 0.5px;
+            font-size: 20px;
+    		border-color: red;
+            
+        }
+         
+        form input:valid {
+            border-color: green;
+        }
+        
+         :invalid {
+            border-color: red;
+        }
+        
+        select
+        {
+            text-align: center;
+            margin: 10px;
+            padding: 5px;
+            border: 5px;
+            border-color: red;
+            width: 500px;
+            border-radius: 30px;
+            outline: 0px;
+            transition: 0.5px;
+            font-size: 20px; 
+            border-color:red;           
+        }
+        form input:focus {
+            background: blue;
+            color: #ffff;
+        }
+        
