@@ -1,0 +1,121 @@
+        body {
+            background-color: lavender;
+        }
+        
+        form {
+            text-align: center;
+            margin: 10px;
+            padding: 15px;
+            font-size: 20px;
+            
+        }
+               
+        form input[type=text],
+        form input[type=number],
+        form input[type=password] {
+            text-align: center;
+            margin: 10px;
+            padding: 15px;
+             border-width: 3px;
+            border-color: black;
+            width: 500px;
+            border-radius: 30px;
+            outline: 10px;
+            transition: 0.5px;
+            font-size: 20px;
+    		border-color: red;
+            
+        }
+         
+        form input:valid {
+            border-color: green;
+        }
+        
+         :invalid {
+            border-color: red;
+        }
+        
+        select,
+        textArea {
+            text-align: center;
+            margin: 10px;
+            padding: 5px;
+            border: 5px;
+            border-color: red;
+            width: 500px;
+            border-radius: 30px;
+            outline: 0px;
+            transition: 0.5px;
+            font-size: 20px;            
+        }
+        
+        form input[type=radio] {
+            color: red;
+            font-size: 25px;
+        }
+        
+        form input:focus {
+            background: blue;
+            color: #ffff;
+        }
+        
+        
+        #updateempRegisterButton {
+            background-color: rgb(8, 245, 8);
+            color: black;
+            font-size: 30px;
+        }
+        
+        #updatevehicleRegisterButton {
+            background-color: rgb(25, 247, 25);
+            color: black;
+            font-size: 30px;
+        }
+        
+        #updateVehicleRegistrationForm {
+            display: none;
+        }
+        
+        #updateempRegisterButton:hover {
+            background-color: blue;
+        }
+        
+        #updatevehicleRegisterButton:hover {
+            background-color: blue;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        #heading {
+            color: red;
+            font-size: 70px;
+            background-color: yellow;
+            padding: 15px;
+            margin-top: 30px;
+            border-radius: 10px;
+            border-color: black;
+            width: 1000px;
+        }
+       
+        #updatepayment {
+            display: none;
+        }
+        
+        #updatepayment,
+        #updatedailyParking,
+        #updatemonthlyParking,
+        #updateyearlyParking {
+            size: 30px;
+            text-align: center;
+            padding: 10px;
+            margin: 10px;
+            font-size: 40px;
+        }
+        
+        button:hover {
+            background-color: blueviolet;
+        }
+        
+     
