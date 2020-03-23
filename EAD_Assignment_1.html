@@ -1,0 +1,385 @@
+<html>
+
+<head>
+    <title>
+        Car Parking
+    </title>
+
+    <script>
+        var vehicleType = "Bicycle";
+        var empRegister = 0;
+        var vehicleRegister = 0;
+        var employeeId = 0000;
+        var vehicleChanged = 0;
+
+        function regitserEmployee() {
+            var empName = document.getElementById("employeeName").value;
+            var empEmail = document.getElementById("employeeEmail").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            var contact = document.getElementById("contactNumber").value;
+            var contactValidation = 1;
+            var emailValidation = 0;
+            var passwordValidation = 1;
+            for (var i = 0; i < contact.length; i++) {
+                if ((contact.charCodeAt(i) < 48) || (contact.charCodeAt(i) > 57)) {
+                    contactValidation = 0;
+                    break;
+                }
+            }
+            for (var i = 0; i < empEmail.length; i++) {
+                if (empEmail.charCodeAt(i) == 64) {
+                    if (i >= 2 && (empEmail.length - i) >= 3) {
+                        emailValidation = 1;
+                    }
+                }
+            }
+            var UpperCase = 0,
+                lowerCase = 0,
+                alphabet = 0,
+                specialChar = 0;
+            for (var i = 0; i < password.length; i++) {
+                if ((password.charCodeAt(i) >= 48) && (password.charCodeAt(i) <= 57)) {
+                    alphabet++;
+                } else if ((password.charCodeAt(i) >= 65) && (password.charCodeAt(i) <= 91)) {
+                    UpperCase++;
+                } else if ((password.charCodeAt(i) >= 97) && (password.charCodeAt(i) <= 123)) {
+                    lowerCase++;
+                } else {
+                    specialChar++;
+                }
+            }
+            if (alphabet == 0 || lowerCase == 0 || specialChar == 0 || UpperCase == 0) {
+                passwordValidation = 0;
+            }
+            if (empName.length > 2) {
+                if ((empEmail.length != 0) && (emailValidation != 0)) {
+                    if (password.length != 0) {
+                        if ((password.length >= 8) && (passwordValidation != 0)) {
+                            if (confirmPassword.lenght != 0) {
+                                if ((password == confirmPassword)) {
+                                    if ((contact.length > 8) && (contactValidation == 1)) {
+                                        document.getElementById("employeeId").value = "Employee Id : " + (++employeeId);
+                                        document.getElementById("employeeId").readOnly = true;
+                                        document.getElementById("employeeId").style.backgroundColor = "blue";
+                                        document.getElementById("employeeId").style.borderColor = "green";
+                                        document.getElementById("employeeId").style.color = "white";
+                                        empRegister = 1;
+                                        document.getElementById("employeeRegistrationForm").innerHTML = "Registration SuccessFul </br>Employee Id : " + employeeId;
+
+                                    } else {
+                                        alert("Invalid Contact Number");
+                                    }
+                                } else {
+                                    alert("Password does not match with confirm Password");
+                                }
+
+                            } else {
+                                alert("please Enter confirm Passowrd");
+
+                            }
+                        } else {
+                            alert("Password does not match expected strength");
+                        }
+
+                    } else {
+                        alert("please Enter Passowrd");
+
+                    }
+                } else {
+                    alert("please Enter Valid Employee Email Id");
+                }
+
+            } else {
+                alert("please Enter Valid Employee Name");
+            }
+        }
+
+
+
+        function regitserVehicle() {
+            if (empRegister == 1) {
+                var VehicleName = document.getElementById("VehicleName").value;
+                var VehicleNumber = document.getElementById("VehicleNumber").value;
+                var vehicleIdentification = document.getElementById("vehicleIdentification").value;
+                if (VehicleName.length >= 4 && VehicleNumber.length >= 4 && vehicleIdentification.length >= 5 && vehicleChanged == 1) {
+                    vehicleRegister = 1;
+                    document.getElementById("VehicleRegistrationForm").innerHTML = "";
+
+                } else {
+                    alert("Please enter valid details of vehicle ");
+
+                }
+            } else {
+                alert("Please Register Employee First");
+            }
+        }
+
+        function currencyChange() {
+            var currency = document.getElementById("CurrencyChange").value;
+            document.getElementById("CurrencyChange").style.borderColor = "green";
+            if (currency == ("INR")) {
+                if (vehicleType == "Bicycle") {
+                    document.getElementById("dailyParking").innerHTML = "Daily Parking<br> 5 Rs";
+                    document.getElementById("monthlyParking").innerHTML = "Monthly Parking<br>100 Rs";
+                    document.getElementById("yearlyParking").innerHTML = "Yearly Parking<br>500 Rs";
+                } else if (vehicleType == "MotorCycle") {
+                    document.getElementById("dailyParking").innerHTML = "Daily Parking<br> 10 Rs";
+                    document.getElementById("monthlyParking").innerHTML = "Monthly Parking<br> 200 Rs";
+                    document.getElementById("yearlyParking").innerHTML = "Yearly Parking<br> 1000 Rs";
+                } else if (vehicleType == "FourWheelers") {
+                    document.getElementById("dailyParking").innerHTML = "Daily Parking<br> 20 Rs";
+                    document.getElementById("monthlyParking").innerHTML = "Monthly Parking<br> 1000 Rs";
+                    document.getElementById("yearlyParking").innerHTML = "Yearly Parking<br> 3500 Rs";
+                }
+
+
+
+            } else if (currency == ("USD")) {
+                if (vehicleType == "Bicycle") {
+                    document.getElementById("dailyParking").innerHTML = "Daily Parking<br> 0.070 USD";
+                    document.getElementById("monthlyParking").innerHTML = "Monthly Parking<br> 1.40 USD";
+                    document.getElementById("yearlyParking").innerHTML = "Yearly Parking<br> 7.00 USD";
+                } else if (vehicleType == "MotorCycle") {
+                    document.getElementById("dailyParking").innerHTML = "Daily Parking<br> 0.140 USD";
+                    document.getElementById("monthlyParking").innerHTML = "Monthly Parking<br> 2.80 USD";
+                    document.getElementById("yearlyParking").innerHTML = "Yearly Parking<br> 14.00 USD";
+                } else if (vehicleType == "FourWheelers") {
+                    document.getElementById("dailyParking").innerHTML = "Daily Parking<br> 0.280 USD";
+                    document.getElementById("monthlyParking").innerHTML = "Monthly Parking<br> 14.00 USD";
+                    document.getElementById("yearlyParking").innerHTML = "Yearly Parking<br> 49.00 USD";
+                }
+
+            } else if (currency == ("YEN")) {
+                if (vehicleType == "Bicycle") {
+                    document.getElementById("dailyParking").innerHTML = "Daily Parking<br> 15.30 YEN";
+                    document.getElementById("monthlyParking").innerHTML = "Monthly Parking<br> 153.00 YEN";
+                    document.getElementById("yearlyParking").innerHTML = "Yearly Parking<br> 765.00 YEN";
+                } else if (vehicleType == "MotorCycle") {
+                    document.getElementById("dailyParking").innerHTML = "Daily Parking<br> 7.65 YEN";
+                    document.getElementById("monthlyParking").innerHTML = "Monthly Parking<br> 306.00 YEN";
+                    document.getElementById("yearlyParking").innerHTML = "Yearly Parking<br> 1530.00 YEN";
+                } else if (vehicleType == "FourWheelers") {
+                    document.getElementById("dailyParking").innerHTML = "Daily Parking<br> 30.60 YEN";
+                    document.getElementById("monthlyParking").innerHTML = "Monthly Parking<br> 765.00 YEN";
+                    document.getElementById("yearlyParking").innerHTML = "Yearly Parking<br> 5355.00 YEN";
+                }
+
+
+            }
+        }
+
+        function payMonthly() {
+            if (empRegister == 1) {
+                if (vehicleRegister == 1) {
+                    document.getElementById("payment").innerHTML = "Please Pay " + document.getElementById("monthlyParking").innerHTML + " </br>Thank You";
+
+                } else {
+                    alert("Please Register vehicle First");
+
+                }
+            } else {
+                alert("Please Register Employee First");
+            }
+
+        }
+
+        function payDaily() {
+            if (empRegister == 1) {
+                if (vehicleRegister == 1) {
+                    document.getElementById("payment").innerHTML = "Please Pay " + document.getElementById("dailyParking").innerHTML + " </br>Thank You";
+
+                } else {
+                    alert("Please Register vehicle First");
+
+                }
+            } else {
+                alert("Please Register Employee First");
+            }
+
+        }
+
+        function payYearly() {
+            if (empRegister == 1) {
+                if (vehicleRegister == 1) {
+                    document.getElementById("payment").innerHTML = "Please Pay " + document.getElementById("yearlyParking").innerHTML + "</br> Thank You";
+
+                } else {
+                    alert("Please Register vehicle First");
+
+                }
+            } else {
+                alert("Please Register Employee First");
+            }
+
+        }
+
+        function vehicleChange() {
+            vehicleType = document.getElementById("vehicleType").value;
+            vehicleChanged = 1;
+            document.getElementById("vehicleType").style.borderColor = "green";
+            document.getElementById("parkingRate").innerHTML = document.getElementById("parkingRate").innerHTML + " : " + vehicleType;
+        }
+    </script>
+    <style>
+        body {
+            background-color: lavender;
+        }
+        
+        form {
+            text-align: center;
+            margin: 10;
+            padding: 15;
+            font-size: 20px;
+        }
+        
+        form input[type=text],
+        form input[type=password] {
+            text-align: center;
+            margin: 15;
+            padding: 15;
+            border: 5;
+            width: 500px;
+            border-radius: 30px;
+            outline: 0;
+            transition: 0.5;
+            font-size: 20px;
+        }
+        
+        select,
+        textArea {
+            text-align: center;
+            margin: 15;
+            padding: 5;
+            border: 5;
+            border-color: red;
+            width: 500px;
+            border-radius: 30px;
+            outline: 0;
+            transition: 0.5;
+            font-size: 20px;
+        }
+        
+        form input[type=radio] {
+            color: red;
+            font-size: 25px;
+        }
+        
+        form input:focus {
+            background: blue;
+            color: #ffff;
+        }
+        
+        form input:valid {
+            border-color: green;
+        }
+        
+         :invalid {
+            border-color: red;
+        }
+        
+        #empRegisterButton {
+            background-color: rgb(8, 245, 8);
+            color: black;
+            font-size: 30px;
+        }
+        
+        #vehicleRegisterButton {
+            background-color: rgb(25, 247, 25);
+            color: black;
+            font-size: 30px;
+        }
+        
+        #empRegisterButton:hover {
+            background-color: blue;
+        }
+        
+        #vehicleRegisterButton:hover {
+            background-color: blue;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        #payment,
+        #dailyParking,
+        #monthlyparking,
+        #yearlyParking {
+            size: 30;
+            text-align: center;
+            padding: 10;
+            margin: 10;
+            font-size: 40;
+        }
+        
+        button:hover {
+            background-color: blueviolet;
+        }
+    </style>
+
+</head>
+
+<body>
+    <form id="employeeRegistrationForm">
+
+        <h1 id="helo">Employee Registration Form</h1>
+        <input type="text" name="employeeName" id="employeeName" placeholder="Enter Full Name(Minimum 3 character)" required>
+        </br><span> Gender</span></br>
+        <label> <input type="radio" name="gender" id="gender" checked="checked">Male</label>
+        <label> <input type="radio" name="gender" id="gender">Female</label>
+        <label> <input type="radio" name="gender" id="gender">Other</label>
+        </br>
+        <input type="text" name="employeeEmail" id="employeeEmail" placeholder="Email Id( '@' at minimum 3 index from both side) " required>
+        </br>
+        <input type="password" name="password" id="password" placeholder="Password(min 8 len+lower,upper,numeric, special char)" required>
+        </br>
+        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required>
+        </br>
+        <input type="text" name="contactNumber" id="contactNumber" placeholder="Contact Number(min 8 length + all numbers)" required>
+        </br>
+        <input type="button" value="Register Employee" id="empRegisterButton" onclick="regitserEmployee();">
+    </form>
+    <br> </br>
+    </br>
+    </br>
+    <form id="VehicleRegistrationForm">
+        <h1>Vehicle Registration Form</h1>
+        <input type="text" name="VehicleName" id="VehicleName" placeholder="Enter Vehicle Name " required>
+        </br>
+        <select id="vehicleType" onchange="vehicleChange()">
+            <option value="">Choose Type of vehicle</option>         
+            <option value="Bicycle">Bicycle</option>
+            <option value="MotorCycle">MotorCycle</option>
+            <option value="FourWheelers">Four Wheelers</option>
+        </select>
+        </br>
+        <input type="text" name="VehicleNumber" id="VehicleNumber" placeholder="Enter Vehicle Number(minimum 4 length)" required>
+        </br>
+        <input type="text" name="VehicleName" id="employeeId" placeholder="Enter employeeId" required>
+        </br>
+        <textArea id="vehicleIdentification" placeholder="Enter vehicle Identification(minimum 5 length)"></textArea>
+        </br>
+        <input type="button" value="Register Vehicle" id="vehicleRegisterButton" onclick="regitserVehicle();">
+    </form>
+    </br>
+    </br>
+    </br>
+
+    <div id="payment">
+        <form>
+            <h2 id="parkingRate">Parking Rate</h2>
+            <select onchange="currencyChange()" id="CurrencyChange">
+                <option value="null">Choose Currency Type To Pay</option>
+                <option value="INR">INR</option>
+                <option value="USD">USD</option>
+                <option value="YEN">YEN</option>
+            </select>
+        </form>
+        <button id="dailyParking" value="daily parking " onclick="payDaily()"></button>
+        <button id="monthlyParking" value="monthly parking " onclick="payMonthly()"></button>
+        <button id="yearlyParking" value="yearly parking " onclick="payYearly()"></button>
+    </div>
+</body>
+
+</html>
