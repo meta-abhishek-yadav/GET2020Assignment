@@ -1,0 +1,13 @@
+spring:
+  mvc:
+   view:
+    prefix: /WEB-INF/pages/
+    suffix: .jsp
+  datasource: 
+   url: jdbc:mysql://localhost:3306/employee_db
+   username: root
+   password: root#123   
+home:
+ message: Welcome to metcube 
+
+
